@@ -11,8 +11,19 @@ export const Button = ({ label, onPress }) => (
     <Text style={styles.buttonText}>{label}</Text>
   </TouchableOpacity>
 );
+export const Container = ({ children }) => (
+  <View style={styles.container}>{children}</View>
+);
 
+// Add to styles
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+    backgroundColor: '#000', // Assume a white background or any other color you prefer
+  },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
