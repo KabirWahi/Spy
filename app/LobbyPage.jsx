@@ -155,7 +155,7 @@ const LobbyPage = ({ isHost, onBack, fontsLoaded }) => {
           </Text>
         ))}
       </ScrollView>
-      <Button label="Leave Lobby" onPress={handleLeave} />
+      <Button label="Leave" onPress={handleLeave} />
       <ErrorPrompt message={errorMessage} animValue={errorAnim} />
     </Container>
   );
