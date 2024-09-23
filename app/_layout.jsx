@@ -5,6 +5,10 @@ export const Title = ({ text }) => (
   <Text style={styles.title}>{text}</Text>
 );
 
+export const Heading = ({ text }) => (
+  <Text style={styles.heading}>{text}</Text>
+);
+
 export const Button = ({ label, onPress }) => (
   <TouchableOpacity style={styles.button} onPress={onPress}>
     <Text style={styles.buttonText}>{label}</Text>
@@ -15,7 +19,7 @@ export const Container = ({ children }) => (
   <View style={styles.container}>{children}</View>
 );
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -31,7 +35,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Powderfinger-Type',
   },
   heading: {
-    fontSize: 16,
+    fontSize: 52,
     fontWeight: 'bold',
     marginBottom: 10,
     color: 'red',
@@ -40,13 +44,66 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: 'red',
     padding: 15,
-    borderRadius: 8,
+    borderRadius: 12,
     marginBottom: 10,
+    width: 200, // Constant width for buttons
+    alignItems: 'center', // Center the text horizontally
   },
   buttonText: {
     color: '#fff',
     fontSize: 22,
     fontWeight: 'bold',
+    fontFamily: 'Powderfinger-Type',
+  },
+  input: {
+    height: 40, 
+    borderColor: 'white', 
+    borderWidth: 2, 
+    fontSize: 16,
+    padding: 10, 
+    marginBottom: 10,
+    textAlign: 'center',
+    color: 'white',
+    borderRadius: 10,
+    fontFamily: 'Powderfinger-Type',
+    width: 200, // Match the width of buttons for consistency
+  },
+  lobbyCode: {
+    color: 'white',
+    fontSize: 24,
+    marginBottom: 10,
+    fontFamily: 'Powderfinger-Type',
+  },
+  playerCount: {
+    color: 'white',
+    fontSize: 24,
+    marginBottom: 10,
+    fontFamily: 'Powderfinger-Type',
+  },
+  playerList: {
+    maxHeight: 200,
+    marginBottom: 10,
+    width: 200, // Match the width of buttons for consistency
+  },
+  playerItem: {
+    textAlign: 'center',
+    color: 'white',
+    fontSize: 20,
+    marginBottom: 5,
+    fontFamily: 'Powderfinger-Type',
+  },
+  errorPrompt: {
+    position: 'absolute',
+    bottom: 20,
+    left: 20,
+    right: 20,
+    backgroundColor: 'rgba(255, 0, 0, 0.8)',
+    padding: 10,
+    borderRadius: 5,
+  },
+  errorText: {
+    color: 'white',
+    textAlign: 'center',
     fontFamily: 'Powderfinger-Type',
   }
 });

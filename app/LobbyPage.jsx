@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Platform, ScrollView, StyleSheet, Animated } from 'react-native';
-import { Title, Button, Container } from './_layout';
+import { Text, TextInput, Platform, ScrollView, Animated } from 'react-native';
+import { Heading, Button, Container, styles } from './_layout';
 import Constants from 'expo-constants';
 
 const LobbyPage = ({ isHost, onBack, fontsLoaded }) => {
@@ -109,19 +109,19 @@ const LobbyPage = ({ isHost, onBack, fontsLoaded }) => {
   if (!isConnected) {
     return (
       <Container>
-        <Title text={isHost ? "Host Game" : "Join Game"} />
+        <Heading text={isHost ? "Host Game" : "Join Game"} />
         <TextInput
           style={styles.input}
           placeholder="Enter your name"
-          placeholderTextColor="gray"
+          placeholderTextColor="white"
           value={playerName}
           onChangeText={setPlayerName}
         />
         {!isHost && (
           <TextInput
-            style={[styles.input, styles.codeInput]}
+            style={styles.input}
             placeholder="Enter game code"
-            placeholderTextColor="gray"
+            placeholderTextColor="white"
             value={joinCode}
             onChangeText={(text) => {
               const alphabeticText = text.replace(/[^A-Za-z]/g, '').toUpperCase();
@@ -140,9 +140,8 @@ const LobbyPage = ({ isHost, onBack, fontsLoaded }) => {
 
   return (
     <Container>
-      <Title text={isHost ? 'Hosting Game' : 'Joined Game'} />
       {lobbyCode && (
-        <Text style={styles.lobbyCode}>
+        <Text style={styles.heading}>
           Lobby Code: {lobbyCode}
         </Text>
       )}
@@ -167,56 +166,5 @@ const ErrorPrompt = ({ message, animValue }) => (
     <Text style={styles.errorText}>{message}</Text>
   </Animated.View>
 );
-
-const styles = StyleSheet.create({
-  input: {
-    height: 40, 
-    borderColor: 'gray', 
-    borderWidth: 1, 
-    padding: 10, 
-    marginBottom: 10,
-    color: 'white',
-    fontFamily: 'Powderfinger-Type',
-  },
-  codeInput: {
-    textTransform: 'uppercase'
-  },
-  lobbyCode: {
-    color: 'white',
-    fontSize: 24,
-    marginBottom: 20,
-    fontFamily: 'Powderfinger-Type',
-  },
-  playerCount: {
-    color: 'white',
-    fontSize: 18,
-    marginBottom: 10,
-    fontFamily: 'Powderfinger-Type',
-  },
-  playerList: {
-    maxHeight: 200,
-    marginBottom: 20
-  },
-  playerItem: {
-    color: 'white',
-    fontSize: 16,
-    marginBottom: 5,
-    fontFamily: 'Powderfinger-Type',
-  },
-  errorPrompt: {
-    position: 'absolute',
-    bottom: 20,
-    left: 20,
-    right: 20,
-    backgroundColor: 'rgba(255, 0, 0, 0.8)',
-    padding: 10,
-    borderRadius: 5,
-  },
-  errorText: {
-    color: 'white',
-    textAlign: 'center',
-    fontFamily: 'Powderfinger-Type',
-  }
-});
 
 export default LobbyPage;
