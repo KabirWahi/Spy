@@ -24,22 +24,29 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
   },
   title: {
-    fontSize: 24,
+    fontSize: 84,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 10,
     color: 'red',
-    fontFamily: 'ITC-Busorama',
+    fontFamily: 'Powderfinger-Type',
+  },
+  heading: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: 'red',
+    fontFamily: 'Powderfinger-Type',
   },
   button: {
     backgroundColor: 'red',
     padding: 15,
-    borderRadius: 5,
+    borderRadius: 8,
     marginBottom: 10,
   },
   buttonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 22,
     fontWeight: 'bold',
-    fontFamily: 'ITC-Busorama',
+    fontFamily: 'Powderfinger-Type',
   }
 });

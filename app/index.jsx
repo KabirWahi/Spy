@@ -7,18 +7,16 @@ import * as Font from 'expo-font';
 export default function App() {
   const [page, setPage] = useState('home');
   const [isHost, setIsHost] = useState(false);
-  const [fontLoaded, setFontLoaded] = useState(false);
+  const [fontsLoaded, setFontsLoaded] = useState(false);
 
   useEffect(() => {
-    async function loadFont() {
+    async function loadFonts() {
       await Font.loadAsync({
-        //'ITC-Busorama': require('../assets/fonts/ITC Busorama Bold.otf'),
-        //'ITC-Busorama': require('../assets/fonts/gruesome.regular.ttf'),
-        'ITC-Busorama': require('../assets/fonts/powderfinger.type.ttf'),
+        'Powderfinger-Type': require('../assets/fonts/powderfinger.type.ttf'),
       });
-      setFontLoaded(true);
+      setFontsLoaded(true);
     }
-    loadFont();
+    loadFonts();
   }, []);
 
   const handleHost = () => {
@@ -31,20 +29,20 @@ export default function App() {
     setPage('lobby');
   };
 
-  if (!fontLoaded) {
+  if (!fontsLoaded) {
     return null; // or a loading indicator
   }
 
   if (page === 'home') {
     return (
       <Container>
-        <Title text="Spy Game" />
+        <Title text="SPY" />
         <Button label="Host Game" onPress={handleHost} />
         <Button label="Join Game" onPress={handleJoin} />
       </Container>
     );
   } else if (page === 'lobby') {
-    return <LobbyPage isHost={isHost} onBack={() => setPage('home')} fontLoaded={fontLoaded} />;
+    return <LobbyPage isHost={isHost} onBack={() => setPage('home')} fontsLoaded={fontsLoaded} />;
   }
 }
 

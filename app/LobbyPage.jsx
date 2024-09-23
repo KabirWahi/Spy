@@ -3,7 +3,7 @@ import { View, Text, TextInput, Platform, ScrollView, StyleSheet, Animated } fro
 import { Title, Button, Container } from './_layout';
 import Constants from 'expo-constants';
 
-const LobbyPage = ({ isHost, onBack, fontLoaded }) => {
+const LobbyPage = ({ isHost, onBack, fontsLoaded }) => {
   const [lobbyCode, setLobbyCode] = useState('');
   const [joinCode, setJoinCode] = useState('');
   const [playerName, setPlayerName] = useState('');
@@ -63,11 +63,11 @@ const LobbyPage = ({ isHost, onBack, fontLoaded }) => {
     }
   };
 
-  const showError = (message) => {  
+  const showError = (message) => {
     setErrorMessage(message);
     Animated.sequence([
       Animated.timing(errorAnim, { toValue: 1, duration: 300, useNativeDriver: true }),
-      Animated.delay(2000),
+      Animated.delay(3000),
       Animated.timing(errorAnim, { toValue: 0, duration: 300, useNativeDriver: true })
     ]).start(() => setErrorMessage(''));
   };
@@ -102,7 +102,7 @@ const LobbyPage = ({ isHost, onBack, fontLoaded }) => {
     onBack();
   };
 
-  if (!fontLoaded) {
+  if (!fontsLoaded) {
     return null; // or a loading indicator
   }
 
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     padding: 10, 
     marginBottom: 10,
     color: 'white',
-    fontFamily: 'ITC-Busorama',
+    fontFamily: 'Powderfinger-Type',
   },
   codeInput: {
     textTransform: 'uppercase'
@@ -185,13 +185,13 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 24,
     marginBottom: 20,
-    fontFamily: 'ITC-Busorama',
+    fontFamily: 'Powderfinger-Type',
   },
   playerCount: {
     color: 'white',
     fontSize: 18,
     marginBottom: 10,
-    fontFamily: 'ITC-Busorama',
+    fontFamily: 'Powderfinger-Type',
   },
   playerList: {
     maxHeight: 200,
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     marginBottom: 5,
-    fontFamily: 'ITC-Busorama',
+    fontFamily: 'Powderfinger-Type',
   },
   errorPrompt: {
     position: 'absolute',
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
   errorText: {
     color: 'white',
     textAlign: 'center',
-    fontFamily: 'ITC-Busorama',
+    fontFamily: 'Powderfinger-Type',
   }
 });
 
