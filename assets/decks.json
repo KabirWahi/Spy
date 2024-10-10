@@ -1,0 +1,10 @@
+{
+    "deck1": {
+      "name": "Deck 1",
+      "words": ["word1", "word2", "word3", "word4", "word5"]
+    },
+    "deck2": {
+      "name": "Deck 2",
+      "words": ["word6", "word7", "word8", "word9", "word10"]
+    }
+  }

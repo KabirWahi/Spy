@@ -6,7 +6,7 @@ import * as Font from 'expo-font';
 
 export default function App() {
   const [page, setPage] = useState('home');
-  const [isHost, setIsHost] = useState(false);
+  const [lobbyMode, setLobbyMode] = useState('');
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
   useEffect(() => {
@@ -20,12 +20,12 @@ export default function App() {
   }, []);
 
   const handleHost = () => {
-    setIsHost(true);
+    setLobbyMode('host');
     setPage('lobby');
   };
 
   const handleJoin = () => {
-    setIsHost(false);
+    setLobbyMode('join');
     setPage('lobby');
   };
 
@@ -42,7 +42,7 @@ export default function App() {
       </Container>
     );
   } else if (page === 'lobby') {
-    return <LobbyPage isHost={isHost} onBack={() => setPage('home')} fontsLoaded={fontsLoaded} />;
+    return <LobbyPage initialMode={lobbyMode} onBack={() => setPage('home')} fontsLoaded={fontsLoaded} />;
   }
 }
 

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Text, TextInput, Platform, ScrollView, Animated } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, TextInput, ScrollView, Animated } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 import { Heading, Button, Container, styles } from './_layout';
-import Constants from 'expo-constants';
 
-const LobbyPage = ({ isHost, onBack, fontsLoaded }) => {
+const LobbyPage = ({ initialMode, onBack, fontsLoaded }) => {
   const [lobbyCode, setLobbyCode] = useState('');
   const [joinCode, setJoinCode] = useState('');
   const [playerName, setPlayerName] = useState('');
@@ -12,15 +12,20 @@ const LobbyPage = ({ isHost, onBack, fontsLoaded }) => {
   const [isConnected, setIsConnected] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [errorAnim] = useState(new Animated.Value(0));
+  const [selectedDeck, setSelectedDeck] = useState('');
+  const [selectedMode, setSelectedMode] = useState('');
+  const [decks, setDecks] = useState({});
+  const [isHost, setIsHost] = useState(initialMode === 'host');
+
+  useEffect(() => {
+    fetch('../assets/decks.json')
+      .then(response => response.json())
+      .then(data => setDecks(data))
+      .catch(error => console.error('Error loading decks:', error));
+  }, []);
 
   const getWebSocketUrl = () => {
-    if (Platform.OS === 'web') {
-      return 'ws://localhost:3000';
-    }
-    if (Platform.OS === 'android') {
-      return 'ws://10.0.2.2:3000';
-    }
-    return `ws://${Constants.manifest.debuggerHost.split(':').shift()}:3000`;
+    return 'ws://localhost:3000';
   };
 
   const connectToServer = (code = '') => {
@@ -55,6 +60,15 @@ const LobbyPage = ({ isHost, onBack, fontsLoaded }) => {
       case 'playerList':
         setLobbyCode(data.partyCode);
         setPlayers(data.players);
+        setSelectedDeck(data.selectedDeck || '');
+        setSelectedMode(data.selectedMode || '');
+        setIsHost(data.players.find(p => p.name === playerName)?.isHost || false);
+        break;
+      case 'newHost':
+        if (data.hostName === playerName) {
+          setIsHost(true);
+          showError('You are now the host!');
+        }
         break;
       case 'error':
         showError(data.message);
@@ -102,8 +116,22 @@ const LobbyPage = ({ isHost, onBack, fontsLoaded }) => {
     onBack();
   };
 
+  const handleDeckChange = (deck) => {
+    setSelectedDeck(deck);
+    if (socket) {
+      socket.send(JSON.stringify({ type: 'updateDeck', deck }));
+    }
+  };
+
+  const handleModeChange = (mode) => {
+    setSelectedMode(mode);
+    if (socket) {
+      socket.send(JSON.stringify({ type: 'updateMode', mode }));
+    }
+  };
+
   if (!fontsLoaded) {
-    return null; // or a loading indicator
+    return null;
   }
 
   if (!isConnected) {
@@ -131,7 +159,7 @@ const LobbyPage = ({ isHost, onBack, fontsLoaded }) => {
             autoCapitalize="characters"
           />
         )}
-        <Button label={isHost ? "Host" : "Join"} onPress={isHost ? handleHost : handleJoin} />
+        <Button label={isHost ? "Host Game" : "Join Game"} onPress={isHost ? handleHost : handleJoin} />
         <Button label="Back" onPress={onBack} />
         <ErrorPrompt message={errorMessage} animValue={errorAnim} />
       </Container>
@@ -151,10 +179,39 @@ const LobbyPage = ({ isHost, onBack, fontsLoaded }) => {
       <ScrollView style={styles.playerList}>
         {players.map((player, index) => (
           <Text key={index} style={styles.playerItem}>
-            {player} {index === 0 ? "(Host)" : ""}
+            {player.name} {player.isHost ? "(Host)" : ""}
           </Text>
         ))}
       </ScrollView>
+      {isHost && (
+        <>
+          <Picker
+            selectedValue={selectedDeck}
+            style={styles.picker}
+            onValueChange={handleDeckChange}
+          >
+            <Picker.Item label="Select a deck" value="" />
+            {Object.keys(decks).map((deckKey) => (
+              <Picker.Item key={deckKey} label={decks[deckKey].name} value={deckKey} />
+            ))}
+          </Picker>
+          <Picker
+            selectedValue={selectedMode}
+            style={styles.picker}
+            onValueChange={handleModeChange}
+          >
+            <Picker.Item label="Select a mode" value="" />
+            <Picker.Item label="Test 1" value="test1" />
+            <Picker.Item label="Test 2" value="test2" />
+          </Picker>
+        </>
+      )}
+      {!isHost && (
+        <>
+          <Text style={styles.infoText}>Selected Deck: {selectedDeck ? decks[selectedDeck]?.name : 'Not selected'}</Text>
+          <Text style={styles.infoText}>Selected Mode: {selectedMode || 'Not selected'}</Text>
+        </>
+      )}
       <Button label="Leave" onPress={handleLeave} />
       <ErrorPrompt message={errorMessage} animValue={errorAnim} />
     </Container>

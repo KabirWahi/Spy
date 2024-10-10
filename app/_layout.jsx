@@ -46,8 +46,8 @@ export const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 12,
     marginBottom: 10,
-    width: 200, // Constant width for buttons
-    alignItems: 'center', // Center the text horizontally
+    width: 200,
+    alignItems: 'center',
   },
   buttonText: {
     color: '#fff',
@@ -66,7 +66,7 @@ export const styles = StyleSheet.create({
     color: 'white',
     borderRadius: 10,
     fontFamily: 'Powderfinger-Type',
-    width: 200, // Match the width of buttons for consistency
+    width: 200,
   },
   lobbyCode: {
     color: 'white',
@@ -83,7 +83,7 @@ export const styles = StyleSheet.create({
   playerList: {
     maxHeight: 200,
     marginBottom: 10,
-    width: 200, // Match the width of buttons for consistency
+    width: 200,
   },
   playerItem: {
     textAlign: 'center',
@@ -105,5 +105,17 @@ export const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     fontFamily: 'Powderfinger-Type',
-  }
+  },
+  picker: {
+    width: 200,
+    color: 'white',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    marginBottom: 10,
+  },
+  infoText: {
+    color: 'white',
+    fontSize: 18,
+    marginBottom: 10,
+    fontFamily: 'Powderfinger-Type',
+  },
 });
